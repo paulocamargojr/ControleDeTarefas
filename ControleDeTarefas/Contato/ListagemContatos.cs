@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ControleDeTarefas.Contato
@@ -17,10 +18,12 @@ namespace ControleDeTarefas.Contato
         private void CarregarContatos()
         {
             List<Contato> contatos = repositorioContato.SelecionarTodos();
+            List<Contato> contatosOrdenados = new List<Contato>();
+            contatosOrdenados = contatos.OrderByDescending(x=>x.Cargo).ToList();
 
             listContatos.Items.Clear();
 
-            foreach (Contato c in contatos)
+            foreach (Contato c in contatosOrdenados)
                 listContatos.Items.Add(c);
         }
 
@@ -94,10 +97,30 @@ namespace ControleDeTarefas.Contato
             {
 
                 repositorioContato.Excluir(contatoSelecionado);
+                //if (!excluir)
+                //{
+
+                //    MessageBox.Show("Não é possivvel excluir contato, pois o mesmo está registrado em um compromisso!"
+                //, "Exclusão de contato"
+                //, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                //    return;
+
+                //}
                 CarregarContatos();
 
             }
+        }
+
+        public List<Contato> ListContatos()
+        {
+
+            List<Contato> contatoList = new List<Contato>();
+            contatoList = repositorioContato.SelecionarTodos();
+
+            return contatoList;
 
         }
+
     }
 }

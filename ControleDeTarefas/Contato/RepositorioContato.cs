@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ControleDeTarefas.Compromisso;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -66,9 +67,19 @@ namespace ControleDeTarefas.Contato
         public void Excluir(Contato contato)
         {
 
+            //List<Compromisso.Compromisso> compromissos = new List<Compromisso.Compromisso>();
+            //RepositorioCompromisso repositorioCompromisso = new RepositorioCompromisso(serializador);
+            //compromissos = repositorioCompromisso.SelecionarTodos();
+            //foreach (var item in compromissos)
+            //{
+
+            //    if (item.Contato.Nome == contato.Nome)
+            //        return false;
+
+            //}
             contatos.Remove(contato);
             serializador.GravarObjetosEmArquivoContato(contatos);
-
+            //return true;
         }
 
         public bool VerificarContato(string nome)

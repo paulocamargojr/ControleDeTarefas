@@ -25,17 +25,19 @@ namespace ControleDeTarefas
         private void CarregarTarefas()
         {
             List<Tarefa> tarefasConcluidas = repositorioTarefa.SelecionarTarefasConcluidas();
+            List<Tarefa> tarefasOrdenadas = tarefasConcluidas.OrderByDescending(x=>x.Prioridade).ToList();
 
             listTarefasConcluidas.Items.Clear();
 
-            foreach (Tarefa t in tarefasConcluidas)
+            foreach (Tarefa t in tarefasOrdenadas)
                 listTarefasConcluidas.Items.Add(t);
 
             List<Tarefa> tarefasPendentes = repositorioTarefa.SelecionarTarefasPendentes();
+            List<Tarefa> tarefasPendentesOrdenadas = tarefasPendentes.OrderByDescending(x => x.Prioridade).ToList();
 
             listTarefasPendentes.Items.Clear();
 
-            foreach (Tarefa t in tarefasPendentes)
+            foreach (Tarefa t in tarefasPendentesOrdenadas)
                 listTarefasPendentes.Items.Add(t);
         }
 

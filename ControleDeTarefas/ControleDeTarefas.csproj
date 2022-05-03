@@ -77,7 +77,7 @@
       <DependentUpon>ListagemContatos.cs</DependentUpon>
     </Compile>
     <Compile Include="Contato\RepositorioContato.cs" />
-    <Compile Include="SerializadorJson.cs" />
+    <Compile Include="Compartilhado\SerializadorJson.cs" />
     <Compile Include="Tarefa\AtualizacaoItensTarefa.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,10 +103,10 @@
       <DependentUpon>ListagemTarefas.cs</DependentUpon>
     </Compile>
     <Compile Include="Tarefa\ItemTarefa.cs" />
-    <Compile Include="Menu.cs">
+    <Compile Include="Telas\Menu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Menu.Designer.cs">
+    <Compile Include="Telas\Menu.Designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -137,7 +137,7 @@
     <EmbeddedResource Include="Tarefa\ListagemTarefas.resx">
       <DependentUpon>ListagemTarefas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Menu.resx">
+    <EmbeddedResource Include="Telas\Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

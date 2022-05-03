@@ -23,6 +23,7 @@ namespace ControleDeTarefas
 
         public int Numero { get; set; }
         public string Titulo { get; set; }
+        public Prioridade Prioridade { get; set; }
         public DateTime DataCriacao { get; set; }
         public DateTime? DataConclusao { get; set; }
         public List<ItemTarefa> Itens { get { return itens; } }
@@ -33,11 +34,11 @@ namespace ControleDeTarefas
 
             if (DataConclusao.HasValue)
             {
-                return $"Número: {Numero}, Título: {Titulo}, Percentual: {percentual}, " +
+                return $"Número: {Numero}, Título: {Titulo}, Prioridade: {Prioridade}, Percentual: {percentual}, " +
                     $"Concluída: {DataConclusao.Value.ToShortDateString()}";
             }
 
-            return $"Número: {Numero}, Título: {Titulo}, Percentual: {percentual}%";
+            return $"Número: {Numero}, Título: {Titulo}, Prioridade: {Prioridade}, Percentual: {percentual}%";
         }
 
         public void AdicionarItem(ItemTarefa item)
@@ -78,4 +79,12 @@ namespace ControleDeTarefas
         }
 
     }
+
+    public enum Prioridade
+    {
+
+        baixa, media, alta
+
+    }
+
 }

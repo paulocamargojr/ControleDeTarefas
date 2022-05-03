@@ -35,7 +35,12 @@ namespace ControleDeTarefas
 
         private void btnGravar_Click_1(object sender, EventArgs e)
         {
+
             tarefa.Titulo = txtTitulo.Text;
+            int valor = Convert.ToInt32(comboBoxPrioridade.SelectedIndex);
+            if(valor < 0)
+                valor = 0;
+            tarefa.Prioridade = (Prioridade)valor;
         }
     }
 }

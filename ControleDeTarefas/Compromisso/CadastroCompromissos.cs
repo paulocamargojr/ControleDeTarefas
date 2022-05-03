@@ -22,7 +22,7 @@ namespace ControleDeTarefas.Compromisso
             InitializeComponent();
             SerializadorJson serializadorJson = new SerializadorJson();
             repositorioContato = new RepositorioContato(serializadorJson);
-            contatos = serializadorJson.CarregarObjetosDoArquivoContato();
+            contatos = repositorioContato.SelecionarTodos();
 
             foreach (var item in contatos)
             {
@@ -36,7 +36,6 @@ namespace ControleDeTarefas.Compromisso
                     
             }
         }
-
         public Compromisso Compromisso
         {
             get
@@ -47,7 +46,6 @@ namespace ControleDeTarefas.Compromisso
             {
                 compromisso = value;
                 txtNumero.Text = compromisso.Numero.ToString();
-                //txtContato.Text = compromisso.Contato.Nome;
                 txtAssunto.Text = compromisso.Assunto;
                 txtLocal.Text = compromisso.Local;
                 txtData.Text = compromisso.Data.ToShortDateString();
@@ -61,6 +59,18 @@ namespace ControleDeTarefas.Compromisso
 
             compromisso.Assunto = txtAssunto.Text;
             compromisso.Local = txtLocal.Text;
+
+            if(txtAssunto.Text.Length == 0 || txtLocal.Text.Length == 0 || txtData.Text.Length == 0)
+            {
+
+                MessageBox.Show("Assunto, local e data são campos obrigatorios!"
+                , "Cadastro Compromisso"
+                , MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                DialogResult = DialogResult.None;
+
+            }
+
             try
             {
                 compromisso.Data = Convert.ToDateTime(txtData.Text);
@@ -103,6 +113,17 @@ namespace ControleDeTarefas.Compromisso
                 DialogResult = DialogResult.None;
             }
 
+            if(compromisso.HoraTermino < compromisso.HoraInicio)
+            {
+
+                MessageBox.Show("A hora de termino deve ser maior do que a data de inicio!"
+                , "Cadastro Compromisso"
+                , MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                DialogResult = DialogResult.None;
+
+            }
+
             if(txtContato.Text.Length > 0)
             {
 
@@ -116,6 +137,18 @@ namespace ControleDeTarefas.Compromisso
                     , MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                     DialogResult = DialogResult.None;
+
+                }
+                else
+                {
+
+                    foreach (var item in contatos)
+                    {
+
+                        if (item.Nome.Equals(txtContato.Text))
+                            compromisso.Contato = item;
+
+                    }
 
                 }
             }
