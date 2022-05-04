@@ -10,31 +10,33 @@ namespace ControleDeTarefas.Contato
     public class RepositorioContato
     {
         private readonly SerializadorJson serializador;
+        private readonly DataContext dataContext;
         List<Contato> contatos = new List<Contato>();
         private int contador = 0;
 
-        public RepositorioContato(SerializadorJson serializador)
+        public RepositorioContato(SerializadorJson serializador, DataContext dataContext)
         {
 
             this.serializador = serializador;
+            this.dataContext = dataContext;
 
-            contatos = serializador.CarregarObjetosDoArquivoContato();
+            dataContext.Contatos.AddRange(serializador.CarregarObjetosDoArquivo().Contatos);
 
-            if (contatos.Count > 0)
-                contador = contatos.Max(x => x.Numero);
+            if (dataContext.Contatos.Count > 0)
+                contador = dataContext.Contatos.Max(x => x.Numero);
         }
 
         public List<Contato> SelecionarTodos()
         {
 
-            return contatos;
+            return dataContext.Contatos;
 
         }
 
         public void Inserir(Contato contato)
         {
 
-            foreach (var item in contatos)
+            foreach (var item in dataContext.Contatos)
             {
 
                 if (contato.Nome == item.Nome || contato.Email == item.Email || contato.Telefone == item.Telefone)
@@ -44,15 +46,15 @@ namespace ControleDeTarefas.Contato
             
 
             contato.Numero = ++contador;
-            contatos.Add(contato);
+            dataContext.Contatos.Add(contato);
 
-            serializador.GravarObjetosEmArquivoContato(contatos);
+            serializador.GravarObjetosEmArquivo(dataContext);
 
         }
 
         public void Editar(Contato contato)
         {
-            foreach (var c in contatos)
+            foreach (var c in dataContext.Contatos)
             {
 
                 c.Nome = contato.Nome;
@@ -60,7 +62,7 @@ namespace ControleDeTarefas.Contato
 
             }
 
-            serializador.GravarObjetosEmArquivoContato(contatos);
+            serializador.GravarObjetosEmArquivo(dataContext);
 
         }
 
@@ -77,15 +79,15 @@ namespace ControleDeTarefas.Contato
             //        return false;
 
             //}
-            contatos.Remove(contato);
-            serializador.GravarObjetosEmArquivoContato(contatos);
+            dataContext.Contatos.Remove(contato);
+            serializador.GravarObjetosEmArquivo(dataContext);
             //return true;
         }
 
         public bool VerificarContato(string nome)
         {
 
-            foreach (var item in contatos)
+            foreach (var item in dataContext.Contatos)
             {
 
                 if (nome == item.Nome)

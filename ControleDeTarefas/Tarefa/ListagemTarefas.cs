@@ -17,7 +17,8 @@ namespace ControleDeTarefas
         public ListagemTarefas()
         {
             SerializadorJson serializadorJson = new SerializadorJson();
-            repositorioTarefa = new RepositorioTarefa(serializadorJson);
+            DataContext dataContext = new DataContext();
+            repositorioTarefa = new RepositorioTarefa(serializadorJson, dataContext);
             InitializeComponent();
             CarregarTarefas();
         }

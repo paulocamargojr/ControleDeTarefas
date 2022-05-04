@@ -16,7 +16,8 @@ namespace ControleDeTarefas.Compromisso
         public ListagemCompromissos()
         {
             SerializadorJson serializadorJson = new SerializadorJson();
-            repositorioCompromisso = new RepositorioCompromisso(serializadorJson);
+            DataContext dataContext = new DataContext();
+            repositorioCompromisso = new RepositorioCompromisso(serializadorJson, dataContext);
             InitializeComponent();
             CarregarCompromissos();
             

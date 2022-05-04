@@ -182,6 +182,7 @@
             this.Controls.Add(this.btnGravar);
             this.Controls.Add(this.label1);
             this.Name = "CadastroContatos";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CadastroContatos";
             this.ResumeLayout(false);
             this.PerformLayout();

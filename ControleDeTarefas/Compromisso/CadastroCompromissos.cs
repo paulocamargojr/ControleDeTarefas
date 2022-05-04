@@ -21,7 +21,8 @@ namespace ControleDeTarefas.Compromisso
         {
             InitializeComponent();
             SerializadorJson serializadorJson = new SerializadorJson();
-            repositorioContato = new RepositorioContato(serializadorJson);
+            DataContext dataContext = new DataContext();
+            repositorioContato = new RepositorioContato(serializadorJson, dataContext);
             contatos = repositorioContato.SelecionarTodos();
 
             foreach (var item in contatos)

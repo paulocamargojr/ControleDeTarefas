@@ -7,25 +7,27 @@ namespace ControleDeTarefas
     public class RepositorioTarefa
     {
         private readonly SerializadorJson serializador;
+        private readonly DataContext dataContext;
         List<Tarefa> tarefas = new List<Tarefa>();
         private int contador = 0;
 
-        public RepositorioTarefa(SerializadorJson serializador)
+        public RepositorioTarefa(SerializadorJson serializador, DataContext dataContext)
         {
 
             this.serializador = serializador;
+            this.dataContext = dataContext;
 
-            tarefas = serializador.CarregarObjetosDoArquivoTarefa();
+            dataContext.Tarefas.AddRange(serializador.CarregarObjetosDoArquivo().Tarefas);
 
-            if (tarefas.Count > 0)
-                contador = tarefas.Max(x => x.Numero);
+            if (dataContext.Tarefas.Count > 0)
+                contador = dataContext.Tarefas.Max(x => x.Numero);
         }
 
         public List<Tarefa> SelecionarTarefasConcluidas()
         {
             List<Tarefa> tarefasConcluidas = new List<Tarefa>();
 
-            foreach (var item in tarefas)
+            foreach (var item in dataContext.Tarefas)
             {
 
                 decimal percentual = item.CalcularPercentualConcluido();
@@ -41,7 +43,7 @@ namespace ControleDeTarefas
 
             List<Tarefa> tarefasPendentes = new List<Tarefa>();
 
-            foreach (var item in tarefas)
+            foreach (var item in dataContext.Tarefas)
             {
 
                 decimal percentual = item.CalcularPercentualConcluido();
@@ -57,15 +59,15 @@ namespace ControleDeTarefas
         {
 
             tarefa.Numero = ++contador;
-            tarefas.Add(tarefa);
+            dataContext.Tarefas.Add(tarefa);
 
-            serializador.GravarObjetosEmArquivoTarefa(tarefas);
+            serializador.GravarObjetosEmArquivo(dataContext);
 
         }
 
         public void Editar(Tarefa tarefa)
         {
-            foreach (var t in tarefas)
+            foreach (var t in dataContext.Tarefas)
             {
 
                 t.Titulo = tarefa.Titulo;
@@ -73,16 +75,16 @@ namespace ControleDeTarefas
 
             }
 
-            serializador.GravarObjetosEmArquivoTarefa(tarefas);
+            serializador.GravarObjetosEmArquivo(dataContext);
 
         }
 
         public void Excluir(Tarefa tarefa)
         {
 
-            tarefas.Remove(tarefa);
+            dataContext.Tarefas.Remove(tarefa);
 
-            serializador.GravarObjetosEmArquivoTarefa(tarefas);
+            serializador.GravarObjetosEmArquivo(dataContext);
         }
 
         public void AdicionatItens(Tarefa tarefaSelecionada, List<ItemTarefa> itens)
@@ -114,7 +116,7 @@ namespace ControleDeTarefas
 
             }
 
-            serializador.GravarObjetosEmArquivoTarefa(tarefas);
+            serializador.GravarObjetosEmArquivo(dataContext);
 
         }
     }

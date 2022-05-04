@@ -9,23 +9,25 @@ namespace ControleDeTarefas.Compromisso
     public class RepositorioCompromisso
     {
         private readonly SerializadorJson serializador;
+        private readonly DataContext dataContext;
         List<Compromisso> compromissos = new List<Compromisso>();
         private int contador = 0;
 
-        public RepositorioCompromisso(SerializadorJson serializador)
+        public RepositorioCompromisso(SerializadorJson serializador, DataContext dataContext)
         {
 
             this.serializador = serializador;
+            this.dataContext = dataContext;
 
-            compromissos = serializador.CarregarObjetosDoArquivoCompromisso();
+            dataContext.Compromissos.AddRange(serializador.CarregarObjetosDoArquivo().Compromissos);
 
-            if (compromissos.Count > 0)
-                contador = compromissos.Max(x => x.Numero);
+            if (dataContext.Compromissos.Count > 0)
+                contador = dataContext.Compromissos.Max(x => x.Numero);
         }
         public List<Compromisso> SelecionarTodos()
         {
             
-            return compromissos;
+            return dataContext.Compromissos;
 
         }
 
@@ -33,29 +35,29 @@ namespace ControleDeTarefas.Compromisso
         {
 
             compromisso.Numero = ++contador;
-            compromissos.Add(compromisso);
-            serializador.GravarObjetosEmArquivoCompromisso(compromissos);
+            dataContext.Compromissos.Add(compromisso);
+            serializador.GravarObjetosEmArquivo(dataContext);
 
         }
 
         public void Editar(Compromisso compromisso)
         {
-            foreach (var c in compromissos)
+            foreach (var c in dataContext.Compromissos)
             {
 
                 c.Assunto = compromisso.Assunto;
                 break;
 
             }
-            serializador.GravarObjetosEmArquivoCompromisso(compromissos);
+            serializador.GravarObjetosEmArquivo(dataContext);
 
         }
 
         public void Excluir(Compromisso compromisso)
         {
 
-            compromissos.Remove(compromisso);
-            serializador.GravarObjetosEmArquivoCompromisso(compromissos);
+            dataContext.Compromissos.Remove(compromisso);
+            serializador.GravarObjetosEmArquivo(dataContext);
 
         }
 

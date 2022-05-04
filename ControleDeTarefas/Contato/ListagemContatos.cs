@@ -10,7 +10,8 @@ namespace ControleDeTarefas.Contato
         public ListagemContatos()
         {
             SerializadorJson serializadorJson = new SerializadorJson();
-            repositorioContato = new RepositorioContato(serializadorJson);
+            DataContext dataContext = new DataContext();
+            repositorioContato = new RepositorioContato(serializadorJson, dataContext);
             InitializeComponent();
             CarregarContatos();
         }

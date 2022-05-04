@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="Contato\RepositorioContato.cs" />
     <Compile Include="Compartilhado\SerializadorJson.cs" />
+    <Compile Include="Compartilhado\DataContext.cs" />
     <Compile Include="Tarefa\AtualizacaoItensTarefa.cs">
       <SubType>Form</SubType>
     </Compile>
